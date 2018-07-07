@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+
+{% block content %}
+    {% if sent %}
+        <h1>Email sucess fully sent </h1>
+    {% else %}
+    <form action="" method="post">
+            {% csrf_token %}
+            {%bootstrap_form form%}
+            <input type="submit" value="share" class="btn btn-lg btn-default">
+        </form>
+    {% endif %}
+   
+
+{% endblock  %}

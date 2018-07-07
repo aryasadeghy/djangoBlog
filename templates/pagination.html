@@ -1,0 +1,28 @@
+<nav aria-label="Page navigation" style="margin-left: 61%;
+margin-top: 33px;">
+    <ul class="pagination">
+        {% if posts.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page=1"> First</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="?page={{ posts.previous_page_number }}">Previous</a>
+        </li>
+
+        {% endif %}
+        <li class="page-item active">
+            <a class="page-link" href="#">{{ posts.number }}
+                <span class="sr-only">(current)</span>
+            </a>
+        </li>
+
+        {% if posts.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ posts.next_page_number }}">Next</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="?page={{ posts.paginator.num_pages }}">Last</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>

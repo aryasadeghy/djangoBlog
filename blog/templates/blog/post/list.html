@@ -1,0 +1,36 @@
+{% extends "base.html" %} {% load blog_tags %} {% block title %} My Blog {% endblock %} {% block content %}
+<div class="row mb-2">
+  {% if tag %}
+  <h2>Posts tagged with "{{tag.name}}"</h2>
+  {% endif %} {% for post in posts %}
+  <div class="col-md-6">
+
+    <div class="card flex-md-row mb-4 box-shadow h-md-250">
+
+      <div class="card-body d-flex flex-column align-items-start" style=" height: 473px;">
+
+        <img class="card-img-right flex-auto d-none d-lg-block" data-src="holder.js/200x250?theme=thumb" alt="Thumbnail [200x250]"
+          src="{{post.image.url}}" data-holder-rendered="true" style="width: 312px; height: 250px;">
+        <div class="mb-1 text-muted"> published {{post.publish}} by {{post.author}} </div>
+        <h3 class="mb-0">
+          <a class="text-dark" href="{{post.get_absolute_url}}">{{post.title}}</a>
+        </h3>
+        <p class="card-text mb-auto">
+          {{post.body |markdown| truncatewords:7}}
+        </p>
+        {% with post.comments.count as total_count %}
+        <p>{{total_count}} comment{{total_count |pluralize}} </p>
+        {% endwith %}
+
+        <p class="tags">
+          Tags : {% for tag in post.tags.all %}
+          <a href="{%url 'blog:post_list_by_tag' tag.slug %}">{{tag.name}}</a>
+          {% if not forloop.last %} {% endif %} {% endfor %}
+        </p>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+  {% include "pagination.html" %}
+{% endblock %}

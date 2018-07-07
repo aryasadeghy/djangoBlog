@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% load blog_tags %}
+{% block title %}
+{{post.title}}
+{% endblock  %}
+
+{% block content %}
+<img class=""src="{{post.image.url}}"  style="width:89%">
+<br>
+<br>
+  <h1>{{post.title}}</h1>
+    <p>published {{post.publish}} by {{post.author}}</p>
+    {{post.body | truncatewords:30|linebreaks}}
+
+    <p><a href="{%url 'blog:post_share' post.pk%}">Share This Post</a></p>
+
+    <br>
+    <hr>
+    <br>
+      <h2>similar post</h2>
+      {% for post in similar_posts  %}
+        <p><a href="{{post.get_absolute_url}}">{{post.title}}</a></p>
+      {%empty%}
+          There are no similar posts yet
+      {% endfor %}
+    <hr>
+  {% with comments.count as total_count  %}
+        <h2>{{total_count}} comment{{total_count |pluralize}}</h2>
+      {% endwith %}
+    {% if comments %}
+    {% for comment  in comments  %}
+    <h2>{{comment.name}}</h2>
+    <p> {{comment.created}} by {{comment.email}} </p>
+    <p>{{comment.body |markdown| linebreaks}}</p>
+    {% endfor %}
+    
+    {%else%}
+      <p>There is no comment for this post</p>
+    {% endif %}
+    <br>
+    <br>
+  <hr>
+    <div class="col-md-4" style="">
+      <h2>send a comment </h2>
+        <form action="" method="post">
+            {% csrf_token %}
+            {%bootstrap_form comment_form%}
+            <input type="submit" value="send" class="btn btn-default">
+          </form>
+    </div>
+   
+{% endblock  %}
