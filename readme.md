@@ -1,4 +1,8 @@
-#django blog 
+# django-blog
+Blog web-app implemented using Django, comes ready to be deployed with minimum configuration!
 
-first install requirements then add your db and migrate it 
-:
+Build with:
+
+Django
+Python
+MySQL
